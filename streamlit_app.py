@@ -21,8 +21,7 @@ my_dataframe = session.table(
     col('SEARCH_ON')
 )
 
-# Convert the Snowpark DataFrame to a Pandas DataFrame
-# so we can use the LOC function
+# Convert Snowpark dataframe to Pandas dataframe
 pd_df = my_dataframe.to_pandas()
 
 ingredients_list = st.multiselect(
@@ -42,18 +41,10 @@ if ingredients_list:
             'SEARCH_ON'
         ].iloc[0]
 
-        st.write(
-            'The search value for ',
-            fruit_chosen,
-            ' is ',
-            search_on,
-            '.'
-        )
-
         st.subheader(fruit_chosen + ' Nutrition Information')
 
         smoothiefroot_response = requests.get(
-            "https://my.smoothiefroot.com/api/fruit/" + fruit_chosen
+            f"https://my.smoothiefroot.com/api/fruit/{search_on}"
         )
 
         sf_df = st.dataframe(
